@@ -7,7 +7,7 @@ interface WordListProps {
 
 const WordList = ({ words, completedWords }: WordListProps) => {
   return (
-    <div className="flex flex-wrap justify-center gap-2 mb-8">
+    <div className="flex flex-wrap justify-center gap-2 max-w-full">
       {words.map((word) => (
         <span
           key={word}

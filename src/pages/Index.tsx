@@ -156,21 +156,29 @@ const Index = () => {
 
   return (
     <div className="min-h-screen p-4 animate-fadeIn">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4 text-primary">Futuristic Crossword</h1>
-          <Timer />
+      <div className="max-w-4xl mx-auto space-y-12 flex flex-col items-center">
+        <div className="text-center space-y-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary tracking-tight">
+            THE BUMUH FAMILY
+          </h1>
+          <div className="inline-block">
+            <Timer />
+          </div>
         </div>
         
-        <WordList words={WORDS} completedWords={completedWords} />
+        <div className="w-full px-4">
+          <WordList words={WORDS} completedWords={completedWords} />
+        </div>
         
-        <CrosswordGrid
-          grid={grid}
-          activeLetters={activeLetters}
-          foundWordCells={foundWordCells}
-          onLetterClick={handleLetterClick}
-          gameCompleted={completedWords.length === WORDS.length}
-        />
+        <div className="w-full flex justify-center px-4 overflow-x-auto">
+          <CrosswordGrid
+            grid={grid}
+            activeLetters={activeLetters}
+            foundWordCells={foundWordCells}
+            onLetterClick={handleLetterClick}
+            gameCompleted={completedWords.length === WORDS.length}
+          />
+        </div>
 
         {completedWords.length === WORDS.length && (
           <div className="text-center text-2xl font-bold text-primary animate-glow">
