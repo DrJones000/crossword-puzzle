@@ -1,15 +1,28 @@
 import React, { useState, useEffect } from 'react';
 
-const Timer = () => {
+interface TimerProps {
+  isRunning: boolean;
+  onTimeUpdate?: (time: number) => void;
+}
+
+const Timer = ({ isRunning, onTimeUpdate }: TimerProps) => {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(prev => prev + 1);
-    }, 1000);
+    let interval: NodeJS.Timeout;
+
+    if (isRunning) {
+      interval = setInterval(() => {
+        setTime(prev => {
+          const newTime = prev + 1;
+          onTimeUpdate?.(newTime);
+          return newTime;
+        });
+      }, 1000);
+    }
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isRunning, onTimeUpdate]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);

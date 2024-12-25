@@ -90,25 +90,43 @@ const generateRandomGrid = () => {
   return grid;
 };
 
+const calculateScore = (timeInSeconds: number) => {
+  // Base score of 1000 points, minus 10 points for each second taken
+  const score = Math.max(1000 - (timeInSeconds * 10), 100);
+  return Math.round(score);
+};
+
 const Index = () => {
   const [grid, setGrid] = useState<string[][]>(() => generateRandomGrid());
   const [activeLetters, setActiveLetters] = useState<{ row: number; col: number }[]>([]);
   const [completedWords, setCompletedWords] = useState<string[]>([]);
   const [foundWordCells, setFoundWordCells] = useState<{ row: number; col: number }[]>([]);
+  const [isTimerRunning, setIsTimerRunning] = useState(true);
+  const [finalTime, setFinalTime] = useState(0);
+  const [finalScore, setFinalScore] = useState(0);
 
   useEffect(() => {
     if (completedWords.length === WORDS.length) {
       console.log('All words found! Playing victory sound...');
+      setIsTimerRunning(false);
+      const score = calculateScore(finalTime);
+      setFinalScore(score);
       playVictorySound();
       const timer = setTimeout(() => {
         setGrid(generateRandomGrid());
         setCompletedWords([]);
         setFoundWordCells([]);
         setActiveLetters([]);
+        setIsTimerRunning(true);
+        setFinalScore(0);
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [completedWords]);
+  }, [completedWords, finalTime]);
+
+  const handleTimeUpdate = (time: number) => {
+    setFinalTime(time);
+  };
 
   const checkWord = (letters: { row: number; col: number }[]) => {
     const word = letters
@@ -166,8 +184,13 @@ const Index = () => {
             THE BUMUH FAMILY
           </h1>
           <div className="inline-block">
-            <Timer />
+            <Timer isRunning={isTimerRunning} onTimeUpdate={handleTimeUpdate} />
           </div>
+          {!isTimerRunning && finalScore > 0 && (
+            <div className="text-2xl font-bold text-primary animate-bounce">
+              Final Score: {finalScore} points!
+            </div>
+          )}
         </div>
         
         <div className="w-full px-4">
