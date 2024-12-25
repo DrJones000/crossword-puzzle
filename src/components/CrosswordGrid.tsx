@@ -37,8 +37,8 @@ const CrosswordGrid = ({
               <div
                 key={`${rowIndex}-${colIndex}`}
                 className={`
-                  w-[min(8vw,3rem)] h-[min(8vw,3rem)] md:w-[min(5vw,4rem)] md:h-[min(5vw,4rem)]
-                  text-base md:text-2xl
+                  w-[min(9vw,4.5rem)] h-[min(9vw,4.5rem)] md:w-[min(7vw,5rem)] md:h-[min(7vw,5rem)]
+                  text-lg md:text-2xl lg:text-3xl
                   letter-cell 
                   ${isActive(rowIndex, colIndex) ? 'active' : ''} 
                   ${isFoundWord(rowIndex, colIndex) ? 'found-word' : ''}

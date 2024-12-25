@@ -13,7 +13,7 @@ const WORDS = [
   "JEREMIAH", "DANIEL", "HOSEA", "JOEL", "AMOS"
 ];
 
-const GRID_SIZE = 15; // Larger grid for more words
+const GRID_SIZE = 10; // Changed from previous value to 10
 
 const generateEmptyGrid = () => {
   return Array(GRID_SIZE).fill(null).map(() => 

@@ -7,7 +7,7 @@ import WordList from "@/components/WordList";
 import CrosswordGrid from "@/components/CrosswordGrid";
 import { playSound } from "@/utils/sounds";
 
-const GRID_SIZE = 15;
+const GRID_SIZE = 10; // Changed from previous value to 10
 const WORDS = [
   "JESUS", "ADAM", "EVE", "NOAH", "ABRAHAM", "SARAH", "MOSES", "AARON",
   "DAVID", "SOLOMON", "ESTHER", "JOB", "ISAIAH", "JEREMIAH", "DANIEL",
