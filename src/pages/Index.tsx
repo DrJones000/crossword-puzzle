@@ -23,6 +23,7 @@ const Index = () => {
   const [grid] = useState(INITIAL_GRID);
   const [activeLetters, setActiveLetters] = useState<{ row: number; col: number }[]>([]);
   const [completedWords, setCompletedWords] = useState<string[]>([]);
+  const [foundWordCells, setFoundWordCells] = useState<{ row: number; col: number }[]>([]);
 
   const checkWord = (letters: { row: number; col: number }[]) => {
     const word = letters
@@ -31,6 +32,7 @@ const Index = () => {
     
     if (WORDS.includes(word) && !completedWords.includes(word)) {
       setCompletedWords(prev => [...prev, word]);
+      setFoundWordCells(prev => [...prev, ...letters]);
       setActiveLetters([]);
       console.log(`Completed word: ${word}`);
     }
@@ -60,7 +62,9 @@ const Index = () => {
         <CrosswordGrid
           grid={grid}
           activeLetters={activeLetters}
+          foundWordCells={foundWordCells}
           onLetterClick={handleLetterClick}
+          gameCompleted={completedWords.length === WORDS.length}
         />
 
         {completedWords.length === WORDS.length && (

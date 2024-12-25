@@ -3,12 +3,24 @@ import React from 'react';
 interface CrosswordGridProps {
   grid: string[][];
   activeLetters: { row: number; col: number }[];
+  foundWordCells: { row: number; col: number }[];
   onLetterClick: (row: number, col: number) => void;
+  gameCompleted: boolean;
 }
 
-const CrosswordGrid = ({ grid, activeLetters, onLetterClick }: CrosswordGridProps) => {
+const CrosswordGrid = ({ 
+  grid, 
+  activeLetters, 
+  foundWordCells,
+  onLetterClick,
+  gameCompleted 
+}: CrosswordGridProps) => {
   const isActive = (row: number, col: number) => {
     return activeLetters.some(pos => pos.row === row && pos.col === col);
+  };
+
+  const isFoundWord = (row: number, col: number) => {
+    return foundWordCells.some(pos => pos.row === row && pos.col === col);
   };
 
   return (
@@ -18,8 +30,15 @@ const CrosswordGrid = ({ grid, activeLetters, onLetterClick }: CrosswordGridProp
           {row.map((letter, colIndex) => (
             <div
               key={`${rowIndex}-${colIndex}`}
-              className={`letter-cell ${isActive(rowIndex, colIndex) ? 'active' : ''} 
-                         ${letter ? 'bg-primary/5' : 'bg-transparent'}`}
+              className={`letter-cell 
+                ${isActive(rowIndex, colIndex) ? 'active' : ''} 
+                ${isFoundWord(rowIndex, colIndex) ? 'found-word' : ''}
+                ${letter ? 'bg-primary/5' : 'bg-transparent'}
+                ${gameCompleted ? 'animate-fallOff' : ''}
+              `}
+              style={{
+                animationDelay: gameCompleted ? `${(rowIndex * row.length + colIndex) * 0.05}s` : '0s'
+              }}
               onClick={() => letter && onLetterClick(rowIndex, colIndex)}
             >
               {letter || ''}

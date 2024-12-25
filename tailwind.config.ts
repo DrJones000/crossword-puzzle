@@ -46,11 +46,22 @@ export default {
           "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        fallOff: {
+          "0%": { 
+            transform: "translateY(0) rotate(0deg)",
+            opacity: "1"
+          },
+          "100%": { 
+            transform: "translateY(1000px) rotate(45deg)",
+            opacity: "0"
+          }
+        }
       },
       animation: {
         glow: "glow 2s ease-in-out infinite",
         strike: "strike 0.5s ease-out forwards",
         fadeIn: "fadeIn 0.5s ease-out forwards",
+        fallOff: "fallOff 1s ease-in forwards"
       },
       fontFamily: {
         space: ["Space Grotesk", "sans-serif"],
