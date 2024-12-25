@@ -58,9 +58,9 @@ const PuzzleSelection = () => {
               </CardHeader>
             </Card>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-48 bg-white shadow-lg z-50">
+          <DropdownMenuContent className="w-48 bg-secondary text-secondary-foreground shadow-xl border border-primary/30">
             <DropdownMenuItem 
-              className="hover:bg-gray-100 cursor-pointer"
+              className="hover:bg-primary/20 cursor-pointer px-4 py-3 text-base"
               onClick={() => {
                 console.log("Navigating to Old Testament puzzle");
                 navigate("/puzzle/bible-books/old-testament");
@@ -69,7 +69,7 @@ const PuzzleSelection = () => {
               Old Testament
             </DropdownMenuItem>
             <DropdownMenuItem 
-              className="hover:bg-gray-100 cursor-pointer"
+              className="hover:bg-primary/20 cursor-pointer px-4 py-3 text-base"
               onClick={() => {
                 console.log("Navigating to New Testament puzzle");
                 navigate("/puzzle/bible-books/new-testament");
