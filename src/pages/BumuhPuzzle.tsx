@@ -18,7 +18,7 @@ const BumuhPuzzle = () => {
   const [finalTime, setFinalTime] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
   const [isGridHidden, setIsGridHidden] = useState(true);
-  const [resetKey, setResetKey] = useState(0); // Add this to force Timer reset
+  const [resetKey, setResetKey] = useState(0);
 
   useEffect(() => {
     if (completedWords.length === WORDS.length) {
@@ -40,12 +40,16 @@ const BumuhPuzzle = () => {
       .join('');
     
     const reversedWord = word.split('').reverse().join('');
-    console.log(`Checking word: ${word}`);
+    console.log(`Checking word: ${word}, Reversed word: ${reversedWord}`);
     
     const upperWord = word.toUpperCase();
     const upperReversedWord = reversedWord.toUpperCase();
     
-    const foundWord = WORDS.find(w => w === upperWord || w === upperReversedWord);
+    const foundWord = WORDS.find(w => {
+      const match = w === upperWord || w === upperReversedWord;
+      console.log(`Comparing ${w} with ${upperWord} and ${upperReversedWord}: ${match}`);
+      return match;
+    });
     
     if (foundWord && !completedWords.includes(foundWord)) {
       console.log(`Found word: ${foundWord}`);
@@ -54,7 +58,7 @@ const BumuhPuzzle = () => {
       setFoundWordCells(prev => [...prev, ...letters]);
       setActiveLetters([]);
     } else {
-      console.log('Word not found in list');
+      console.log('Word not found in list or already completed');
     }
   };
 
@@ -99,7 +103,7 @@ const BumuhPuzzle = () => {
     setFinalTime(0);
     setFinalScore(0);
     setIsGridHidden(true);
-    setResetKey(prev => prev + 1); // Increment resetKey to force Timer reset
+    setResetKey(prev => prev + 1);
   };
 
   return (
@@ -112,7 +116,7 @@ const BumuhPuzzle = () => {
           onBackToMenu={resetGame}
           finalScore={finalScore}
           onCountdownComplete={handleCountdownComplete}
-          resetKey={resetKey} // Pass resetKey to PuzzleHeader
+          resetKey={resetKey}
         />
         
         <PuzzleWords 
