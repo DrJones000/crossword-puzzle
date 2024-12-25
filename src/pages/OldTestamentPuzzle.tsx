@@ -112,6 +112,7 @@ const OldTestamentPuzzle = () => {
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [finalTime, setFinalTime] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
+  const [isGridHidden, setIsGridHidden] = useState(true);
 
   const handleBackToMenu = () => {
     console.log('Navigating back to puzzle selection');
@@ -188,6 +189,11 @@ const OldTestamentPuzzle = () => {
     });
   };
 
+  const handleCountdownComplete = () => {
+    console.log('Countdown complete, revealing grid');
+    setIsGridHidden(false);
+  };
+
   return (
     <div className="min-h-screen p-4 animate-fadeIn">
       <div className="max-w-4xl mx-auto space-y-12 flex flex-col items-center">
@@ -205,7 +211,11 @@ const OldTestamentPuzzle = () => {
             OLD TESTAMENT PUZZLE
           </h1>
           <div className="inline-block">
-            <Timer isRunning={isTimerRunning} onTimeUpdate={handleTimeUpdate} />
+            <Timer 
+              isRunning={isTimerRunning} 
+              onTimeUpdate={handleTimeUpdate}
+              onCountdownComplete={handleCountdownComplete}
+            />
           </div>
           {!isTimerRunning && finalScore > 0 && (
             <div className="text-2xl font-bold text-primary animate-bounce">
@@ -225,6 +235,7 @@ const OldTestamentPuzzle = () => {
             foundWordCells={foundWordCells}
             onLetterClick={handleLetterClick}
             gameCompleted={completedWords.length === WORDS.length}
+            isHidden={isGridHidden}
           />
         </div>
 

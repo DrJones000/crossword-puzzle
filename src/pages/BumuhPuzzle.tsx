@@ -93,7 +93,6 @@ const generateRandomGrid = () => {
 };
 
 const calculateScore = (timeInSeconds: number) => {
-  // Base score of 1000 points, minus 10 points for each second taken
   const score = Math.max(1000 - (timeInSeconds * 10), 100);
   return Math.round(score);
 };
@@ -107,6 +106,7 @@ const Index = () => {
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [finalTime, setFinalTime] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
+  const [isGridHidden, setIsGridHidden] = useState(true);
 
   const handleBackToMenu = () => {
     console.log('Navigating back to puzzle selection');
@@ -121,7 +121,6 @@ const Index = () => {
       setFinalScore(score);
       playVictorySound();
       
-      // Add a delay before navigating back to the puzzle selection
       const timer = setTimeout(() => {
         console.log('Navigating back to puzzle selection');
         navigate('/puzzles');
@@ -144,7 +143,6 @@ const Index = () => {
     
     console.log(`Checking word: ${word}`);
     
-    // Convert both the found word and target words to uppercase for comparison
     const upperWord = word.toUpperCase();
     const upperReversedWord = reversedWord.toUpperCase();
     
@@ -185,6 +183,11 @@ const Index = () => {
     });
   };
 
+  const handleCountdownComplete = () => {
+    console.log('Countdown complete, revealing grid');
+    setIsGridHidden(false);
+  };
+
   return (
     <div className="min-h-screen p-4 animate-fadeIn">
       <div className="max-w-4xl mx-auto space-y-12 flex flex-col items-center">
@@ -202,7 +205,11 @@ const Index = () => {
             BUMUH CROSSWORD PUZZLE
           </h1>
           <div className="inline-block">
-            <Timer isRunning={isTimerRunning} onTimeUpdate={handleTimeUpdate} />
+            <Timer 
+              isRunning={isTimerRunning} 
+              onTimeUpdate={handleTimeUpdate}
+              onCountdownComplete={handleCountdownComplete}
+            />
           </div>
           {!isTimerRunning && finalScore > 0 && (
             <div className="text-2xl font-bold text-primary animate-bounce">
@@ -222,6 +229,7 @@ const Index = () => {
             foundWordCells={foundWordCells}
             onLetterClick={handleLetterClick}
             gameCompleted={completedWords.length === WORDS.length}
+            isHidden={isGridHidden}
           />
         </div>
 

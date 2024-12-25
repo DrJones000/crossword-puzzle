@@ -2,55 +2,56 @@ import React, { useState, useEffect } from 'react';
 
 interface TimerProps {
   isRunning: boolean;
-  onTimeUpdate?: (time: number) => void;
+  onTimeUpdate: (time: number) => void;
+  onCountdownComplete?: () => void;
 }
 
-const Timer = ({ isRunning, onTimeUpdate }: TimerProps) => {
+const Timer = ({ isRunning, onTimeUpdate, onCountdownComplete }: TimerProps) => {
   const [time, setTime] = useState(0);
-  const [countdown, setCountdown] = useState<string | null>("5");
+  const [countdown, setCountdown] = useState(5);
+  const [isCountingDown, setIsCountingDown] = useState(true);
 
   useEffect(() => {
-    if (isRunning && countdown !== null) {
-      const countdownSequence = ["5", "4", "3", "2", "1", "GO!", null];
-      let currentIndex = countdownSequence.indexOf(countdown);
-      
-      const timer = setTimeout(() => {
-        console.log('Countdown:', countdownSequence[currentIndex + 1]);
-        setCountdown(countdownSequence[currentIndex + 1]);
-      }, 1500); // Increased from 1000ms to 1500ms for slower countdown
-      
-      return () => clearTimeout(timer);
-    }
+    let intervalId: NodeJS.Timeout;
 
-    if (isRunning && countdown === null) {
-      console.log('Starting main timer');
-      const interval = setInterval(() => {
-        setTime(prev => {
-          const newTime = prev + 1;
-          onTimeUpdate?.(newTime);
+    if (isCountingDown) {
+      intervalId = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            setIsCountingDown(false);
+            onCountdownComplete?.();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1500); // Slower countdown (1.5 seconds)
+    } else if (isRunning) {
+      intervalId = setInterval(() => {
+        setTime((prevTime) => {
+          const newTime = prevTime + 1;
+          onTimeUpdate(newTime);
           return newTime;
         });
       }, 1000);
-
-      return () => clearInterval(interval);
     }
-  }, [isRunning, countdown, onTimeUpdate]);
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
+    return () => clearInterval(intervalId);
+  }, [isRunning, isCountingDown, onTimeUpdate, onCountdownComplete]);
+
+  if (isCountingDown) {
+    return (
+      <div className="text-4xl font-bold text-primary animate-bounce">
+        {countdown === 0 ? 'GO!' : countdown}
+      </div>
+    );
+  }
+
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
 
   return (
-    <div className="timer">
-      {countdown ? (
-        <div className="text-4xl font-bold text-primary animate-bounce">
-          {countdown}
-        </div>
-      ) : (
-        formatTime(time)
-      )}
+    <div className="text-2xl font-bold">
+      {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
     </div>
   );
 };
