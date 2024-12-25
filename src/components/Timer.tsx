@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 interface TimerProps {
   isRunning: boolean;
@@ -11,6 +11,11 @@ const Timer = ({ isRunning, onTimeUpdate, onCountdownComplete }: TimerProps) => 
   const [countdown, setCountdown] = useState(5);
   const [isCountingDown, setIsCountingDown] = useState(true);
 
+  const handleCountdownComplete = useCallback(() => {
+    setIsCountingDown(false);
+    onCountdownComplete?.();
+  }, [onCountdownComplete]);
+
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
@@ -18,13 +23,12 @@ const Timer = ({ isRunning, onTimeUpdate, onCountdownComplete }: TimerProps) => 
       intervalId = setInterval(() => {
         setCountdown((prev) => {
           if (prev <= 1) {
-            setIsCountingDown(false);
-            onCountdownComplete?.();
+            handleCountdownComplete();
             return 0;
           }
           return prev - 1;
         });
-      }, 1500); // Slower countdown (1.5 seconds)
+      }, 1500);
     } else if (isRunning) {
       intervalId = setInterval(() => {
         setTime((prevTime) => {
@@ -36,7 +40,7 @@ const Timer = ({ isRunning, onTimeUpdate, onCountdownComplete }: TimerProps) => 
     }
 
     return () => clearInterval(intervalId);
-  }, [isRunning, isCountingDown, onTimeUpdate, onCountdownComplete]);
+  }, [isRunning, isCountingDown, onTimeUpdate, handleCountdownComplete]);
 
   if (isCountingDown) {
     return (
