@@ -1,0 +1,11 @@
+export const NEW_TESTAMENT_BOOKS = [
+  'MATTHEW', 'MARK', 'LUKE', 'JOHN', 'ACTS', 'ROMANS',
+  '1CORINTHIANS', '2CORINTHIANS', 'GALATIANS', 'EPHESIANS',
+  'PHILIPPIANS', 'COLOSSIANS', '1THESSALONIANS', '2THESSALONIANS',
+  '1TIMOTHY', '2TIMOTHY', 'TITUS', 'PHILEMON', 'HEBREWS',
+  'JAMES', '1PETER', '2PETER', '1JOHN', '2JOHN', '3JOHN',
+  'JUDE', 'REVELATION'
+];
+
+// Increased grid size to accommodate longer words
+export const GRID_SIZE = 20;
