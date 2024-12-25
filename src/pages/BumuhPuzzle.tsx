@@ -87,7 +87,10 @@ const BumuhPuzzle = () => {
   };
 
   const resetGame = () => {
-    setGrid(generateRandomGrid(WORDS, GRID_SIZE));
+    console.log('Resetting game...');
+    const newGrid = generateRandomGrid(WORDS, GRID_SIZE);
+    console.log('New grid generated');
+    setGrid(newGrid);
     setActiveLetters([]);
     setCompletedWords([]);
     setFoundWordCells([]);
