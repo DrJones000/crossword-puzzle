@@ -22,11 +22,12 @@ body {
 }
 
 .word-list-item {
-  @apply relative inline-block px-4 py-2 m-2 rounded-lg bg-primary/10 text-secondary-foreground;
+  @apply relative inline-block px-4 py-2 m-2 rounded-lg bg-primary/10 text-secondary-foreground 
+         transition-all duration-300;
 }
 
 .word-list-item.completed {
-  @apply opacity-50;
+  @apply opacity-50 line-through;
 }
 
 .word-list-item.completed::after {

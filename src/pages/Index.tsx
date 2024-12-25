@@ -97,12 +97,13 @@ const Index = () => {
 
   useEffect(() => {
     if (completedWords.length === WORDS.length) {
+      console.log('All words found! Resetting puzzle...');
       const timer = setTimeout(() => {
         setGrid(generateRandomGrid());
         setCompletedWords([]);
         setFoundWordCells([]);
         setActiveLetters([]);
-      }, 3000);
+      }, 3000); // Wait for fall animation to complete
       return () => clearTimeout(timer);
     }
   }, [completedWords]);
