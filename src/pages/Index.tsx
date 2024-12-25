@@ -102,7 +102,7 @@ const Index = () => {
         setCompletedWords([]);
         setFoundWordCells([]);
         setActiveLetters([]);
-      }, 3000); // Wait for fall animation to complete
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [completedWords]);
@@ -112,11 +112,21 @@ const Index = () => {
       .map(({ row, col }) => grid[row][col])
       .join('');
     
+    // Also check the reverse of the word
+    const reversedWord = word.split('').reverse().join('');
+    
+    console.log(`Checking word: ${word} and reversed: ${reversedWord}`);
+    
     if (WORDS.includes(word) && !completedWords.includes(word)) {
       setCompletedWords(prev => [...prev, word]);
       setFoundWordCells(prev => [...prev, ...letters]);
       setActiveLetters([]);
       console.log(`Completed word: ${word}`);
+    } else if (WORDS.includes(reversedWord) && !completedWords.includes(reversedWord)) {
+      setCompletedWords(prev => [...prev, reversedWord]);
+      setFoundWordCells(prev => [...prev, ...letters]);
+      setActiveLetters([]);
+      console.log(`Completed word (reversed): ${reversedWord}`);
     }
   };
 
