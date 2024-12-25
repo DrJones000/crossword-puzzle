@@ -68,15 +68,6 @@ const PuzzleSelection = () => {
             >
               Old Testament
             </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="hover:bg-primary/20 cursor-pointer px-4 py-3 text-base font-medium"
-              onClick={() => {
-                console.log("Navigating to New Testament puzzle");
-                navigate("/puzzle/bible-books/new-testament");
-              }}
-            >
-              New Testament
-            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
