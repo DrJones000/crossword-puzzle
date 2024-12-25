@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Timer from '../components/Timer';
 import WordList from '../components/WordList';
 import CrosswordGrid from '../components/CrosswordGrid';
-import { playClickSound, playCompleteSound } from '../utils/sounds';
+import { playClickSound, playCompleteSound, playVictorySound } from '../utils/sounds';
 
 const WORDS = ['ALFRED', 'MARY', 'NANCY', 'WILSON', 'ELEANOR', 'WILLIAM', 'NOVELA'];
 const GRID_SIZE = 9;
@@ -98,7 +98,8 @@ const Index = () => {
 
   useEffect(() => {
     if (completedWords.length === WORDS.length) {
-      console.log('All words found! Resetting puzzle...');
+      console.log('All words found! Playing victory sound...');
+      playVictorySound();
       const timer = setTimeout(() => {
         setGrid(generateRandomGrid());
         setCompletedWords([]);
