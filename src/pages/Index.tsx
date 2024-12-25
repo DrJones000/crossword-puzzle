@@ -4,24 +4,108 @@ import WordList from '../components/WordList';
 import CrosswordGrid from '../components/CrosswordGrid';
 
 const WORDS = ['ALFRED', 'MARY', 'NANCY', 'WILSON', 'ELEANOR', 'WILLIAM', 'NOVELA'];
+const GRID_SIZE = 9;
 
-const INITIAL_GRID = [
-  ['A', 'L', 'F', 'R', 'E', 'D', 'W', 'Q', 'S'],
-  ['B', 'C', 'D', 'E', 'L', 'I', 'G', 'H', 'I'],
-  ['N', 'M', 'A', 'R', 'Y', 'L', 'L', 'M', 'N'],
-  ['O', 'P', 'Q', 'R', 'A', 'L', 'I', 'U', 'W'],
-  ['V', 'N', 'A', 'N', 'C', 'Y', 'A', 'X', 'I'],
-  ['E', 'B', 'C', 'D', 'N', 'E', 'M', 'G', 'L'],
-  ['L', 'H', 'I', 'J', 'O', 'K', 'L', 'M', 'S'],
-  ['A', 'E', 'L', 'E', 'A', 'N', 'O', 'R', 'O'],
-  ['W', 'I', 'L', 'S', 'O', 'N', 'S', 'T', 'N'],
-];
+const generateEmptyGrid = () => {
+  return Array(GRID_SIZE).fill(null).map(() => 
+    Array(GRID_SIZE).fill('')
+  );
+};
+
+const canPlaceWord = (
+  grid: string[][], 
+  word: string, 
+  row: number, 
+  col: number, 
+  isVertical: boolean
+) => {
+  if (isVertical && row + word.length > GRID_SIZE) return false;
+  if (!isVertical && col + word.length > GRID_SIZE) return false;
+
+  for (let i = 0; i < word.length; i++) {
+    const currentRow = isVertical ? row + i : row;
+    const currentCol = isVertical ? col : col + i;
+    const existingLetter = grid[currentRow][currentCol];
+    
+    if (existingLetter && existingLetter !== word[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const placeWord = (
+  grid: string[][], 
+  word: string, 
+  row: number, 
+  col: number, 
+  isVertical: boolean
+) => {
+  const newGrid = grid.map(row => [...row]);
+  for (let i = 0; i < word.length; i++) {
+    if (isVertical) {
+      newGrid[row + i][col] = word[i];
+    } else {
+      newGrid[row][col + i] = word[i];
+    }
+  }
+  return newGrid;
+};
+
+const generateRandomGrid = () => {
+  let grid = generateEmptyGrid();
+  const placedWords: string[] = [];
+
+  // Try to place each word
+  for (const word of WORDS) {
+    let placed = false;
+    let attempts = 0;
+    const maxAttempts = 100;
+
+    while (!placed && attempts < maxAttempts) {
+      const isVertical = Math.random() > 0.5;
+      const row = Math.floor(Math.random() * GRID_SIZE);
+      const col = Math.floor(Math.random() * GRID_SIZE);
+
+      if (canPlaceWord(grid, word, row, col, isVertical)) {
+        grid = placeWord(grid, word, row, col, isVertical);
+        placed = true;
+        placedWords.push(word);
+      }
+      attempts++;
+    }
+  }
+
+  // Fill remaining empty cells with random letters
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for (let i = 0; i < GRID_SIZE; i++) {
+    for (let j = 0; j < GRID_SIZE; j++) {
+      if (!grid[i][j]) {
+        grid[i][j] = letters[Math.floor(Math.random() * letters.length)];
+      }
+    }
+  }
+
+  return grid;
+};
 
 const Index = () => {
-  const [grid] = useState(INITIAL_GRID);
+  const [grid, setGrid] = useState<string[][]>(() => generateRandomGrid());
   const [activeLetters, setActiveLetters] = useState<{ row: number; col: number }[]>([]);
   const [completedWords, setCompletedWords] = useState<string[]>([]);
   const [foundWordCells, setFoundWordCells] = useState<{ row: number; col: number }[]>([]);
+
+  useEffect(() => {
+    if (completedWords.length === WORDS.length) {
+      const timer = setTimeout(() => {
+        setGrid(generateRandomGrid());
+        setCompletedWords([]);
+        setFoundWordCells([]);
+        setActiveLetters([]);
+      }, 3000); // Wait for fall animation to complete
+      return () => clearTimeout(timer);
+    }
+  }, [completedWords]);
 
   const checkWord = (letters: { row: number; col: number }[]) => {
     const word = letters
@@ -39,26 +123,21 @@ const Index = () => {
   const handleLetterClick = (row: number, col: number) => {
     const letterPos = { row, col };
     
-    // Check if the letter is already selected
     const letterIndex = activeLetters.findIndex(
       pos => pos.row === row && pos.col === col
     );
 
     setActiveLetters(prev => {
       if (letterIndex !== -1) {
-        // If the letter is the last one selected, remove it
         if (letterIndex === prev.length - 1) {
           const newActive = prev.slice(0, -1);
           console.log('Letter deselected');
           return newActive;
         }
-        // If it's not the last letter, don't allow deselection
         return prev;
       }
       
-      // Add new letter
       const newActive = [...prev, letterPos];
-      // Check if we formed a word
       setTimeout(() => checkWord(newActive), 100);
       return newActive;
     });
