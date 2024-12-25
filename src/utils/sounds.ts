@@ -4,7 +4,21 @@ let audioContext: AudioContext | null = null;
 const getAudioContext = () => {
   try {
     if (!audioContext) {
-      audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      // Resume audio context on mobile devices
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      audioContext = new AudioContextClass();
+      
+      // Handle mobile audio context state
+      if (audioContext.state === 'suspended') {
+        const resumeAudioContext = () => {
+          audioContext?.resume();
+          document.removeEventListener('touchstart', resumeAudioContext);
+          document.removeEventListener('click', resumeAudioContext);
+        };
+        
+        document.addEventListener('touchstart', resumeAudioContext);
+        document.addEventListener('click', resumeAudioContext);
+      }
     }
     return audioContext;
   } catch (error) {
@@ -15,9 +29,14 @@ const getAudioContext = () => {
 
 const playTone = (frequency: number, duration: number, startTime: number = 0, volume: number = 0.1) => {
   const context = getAudioContext();
-  if (!context) return; // Gracefully handle when audio context is not available
+  if (!context) return;
 
   try {
+    // Resume context if it's suspended (common on mobile)
+    if (context.state === 'suspended') {
+      context.resume();
+    }
+
     const oscillator = context.createOscillator();
     const gainNode = context.createGain();
 
