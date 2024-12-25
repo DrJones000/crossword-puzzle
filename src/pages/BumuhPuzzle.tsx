@@ -18,6 +18,7 @@ const BumuhPuzzle = () => {
   const [finalTime, setFinalTime] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
   const [isGridHidden, setIsGridHidden] = useState(true);
+  const [resetKey, setResetKey] = useState(0); // Add this to force Timer reset
 
   useEffect(() => {
     if (completedWords.length === WORDS.length) {
@@ -98,6 +99,7 @@ const BumuhPuzzle = () => {
     setFinalTime(0);
     setFinalScore(0);
     setIsGridHidden(true);
+    setResetKey(prev => prev + 1); // Increment resetKey to force Timer reset
   };
 
   return (
@@ -110,6 +112,7 @@ const BumuhPuzzle = () => {
           onBackToMenu={resetGame}
           finalScore={finalScore}
           onCountdownComplete={handleCountdownComplete}
+          resetKey={resetKey} // Pass resetKey to PuzzleHeader
         />
         
         <PuzzleWords 

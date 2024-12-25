@@ -9,6 +9,7 @@ interface PuzzleHeaderProps {
   onBackToMenu: () => void;
   finalScore?: number;
   onCountdownComplete?: () => void;
+  resetKey?: number;
 }
 
 const PuzzleHeader = ({
@@ -17,7 +18,8 @@ const PuzzleHeader = ({
   onTimeUpdate,
   onBackToMenu,
   finalScore,
-  onCountdownComplete
+  onCountdownComplete,
+  resetKey
 }: PuzzleHeaderProps) => {
   return (
     <div className="text-center space-y-6">
@@ -38,6 +40,7 @@ const PuzzleHeader = ({
           isRunning={isTimerRunning} 
           onTimeUpdate={onTimeUpdate}
           onCountdownComplete={onCountdownComplete}
+          resetKey={resetKey}
         />
       </div>
       {!isTimerRunning && finalScore && finalScore > 0 && (

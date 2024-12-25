@@ -4,12 +4,20 @@ interface TimerProps {
   isRunning: boolean;
   onTimeUpdate: (time: number) => void;
   onCountdownComplete?: () => void;
+  resetKey?: number; // Add this to force reset
 }
 
-const Timer = ({ isRunning, onTimeUpdate, onCountdownComplete }: TimerProps) => {
+const Timer = ({ isRunning, onTimeUpdate, onCountdownComplete, resetKey }: TimerProps) => {
   const [time, setTime] = useState(0);
   const [countdown, setCountdown] = useState(5);
   const [isCountingDown, setIsCountingDown] = useState(true);
+
+  // Reset countdown when resetKey changes
+  useEffect(() => {
+    setTime(0);
+    setCountdown(5);
+    setIsCountingDown(true);
+  }, [resetKey]);
 
   const handleCountdownComplete = useCallback(() => {
     setIsCountingDown(false);
