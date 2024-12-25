@@ -29,15 +29,15 @@ const CrosswordGrid = ({
   };
 
   return (
-    <div className="w-full overflow-x-auto pb-4">
-      <div className={`grid gap-0.5 md:gap-1 mx-auto w-fit`}>
+    <div className="w-full max-w-full overflow-x-auto pb-4">
+      <div className={`grid gap-1 md:gap-1.5 mx-auto w-fit`}>
         {grid.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex gap-0.5 md:gap-1">
+          <div key={rowIndex} className="flex gap-1 md:gap-1.5">
             {row.map((letter, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
                 className={`
-                  w-8 h-8 md:w-14 md:h-14 
+                  w-[min(8vw,3rem)] h-[min(8vw,3rem)] md:w-[min(5vw,4rem)] md:h-[min(5vw,4rem)]
                   text-base md:text-2xl
                   letter-cell 
                   ${isActive(rowIndex, colIndex) ? 'active' : ''} 

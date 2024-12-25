@@ -107,8 +107,8 @@ const BumuhPuzzle = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 animate-fadeIn">
-      <div className="max-w-4xl mx-auto space-y-12 flex flex-col items-center">
+    <div className="min-h-screen p-2 md:p-4 animate-fadeIn flex flex-col">
+      <div className="max-w-7xl w-full mx-auto space-y-6 md:space-y-8 flex-1 flex flex-col">
         <PuzzleHeader
           title="BUMUH CROSSWORD PUZZLE"
           isTimerRunning={isTimerRunning}
@@ -119,19 +119,23 @@ const BumuhPuzzle = () => {
           resetKey={resetKey}
         />
         
-        <PuzzleWords 
-          words={WORDS} 
-          completedWords={completedWords} 
-        />
-        
-        <PuzzleGrid
-          grid={grid}
-          activeLetters={activeLetters}
-          foundWordCells={foundWordCells}
-          onLetterClick={handleLetterClick}
-          gameCompleted={completedWords.length === WORDS.length}
-          isHidden={isGridHidden}
-        />
+        <div className="flex-1 flex flex-col justify-between gap-6 md:gap-8">
+          <PuzzleWords 
+            words={WORDS} 
+            completedWords={completedWords} 
+          />
+          
+          <div className="flex-1 flex items-center justify-center">
+            <PuzzleGrid
+              grid={grid}
+              activeLetters={activeLetters}
+              foundWordCells={foundWordCells}
+              onLetterClick={handleLetterClick}
+              gameCompleted={completedWords.length === WORDS.length}
+              isHidden={isGridHidden}
+            />
+          </div>
+        </div>
 
         {completedWords.length === WORDS.length && (
           <div className="text-center text-2xl font-bold text-primary animate-glow">
