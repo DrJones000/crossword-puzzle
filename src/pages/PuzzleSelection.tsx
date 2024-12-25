@@ -1,5 +1,11 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const PuzzleSelection = () => {
   const navigate = useNavigate();
@@ -11,12 +17,6 @@ const PuzzleSelection = () => {
       title: "The Bumuh Family",
       description: "Find names from the Bumuh family tree",
       route: "/puzzle/bumuh-family"
-    },
-    {
-      id: "bible-books",
-      title: "Books of the Bible",
-      description: "Find books from the Holy Bible",
-      route: "/puzzle/bible-books"
     },
     {
       id: "bible-characters",
@@ -48,6 +48,35 @@ const PuzzleSelection = () => {
             </CardHeader>
           </Card>
         ))}
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer hover:scale-105 transform transition-transform duration-200">
+              <CardHeader className="text-center">
+                <CardTitle className="text-xl mb-2">Books of the Bible</CardTitle>
+                <p className="text-sm text-gray-600">Find books from the Holy Bible</p>
+              </CardHeader>
+            </Card>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-48 bg-white">
+            <DropdownMenuItem 
+              onClick={() => {
+                console.log("Navigating to Old Testament puzzle");
+                navigate("/puzzle/bible-books/old-testament");
+              }}
+            >
+              Old Testament
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={() => {
+                console.log("Navigating to New Testament puzzle");
+                navigate("/puzzle/bible-books/new-testament");
+              }}
+            >
+              New Testament
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );
