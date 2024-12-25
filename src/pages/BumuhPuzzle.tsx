@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Timer from '../components/Timer';
 import WordList from '../components/WordList';
 import CrosswordGrid from '../components/CrosswordGrid';
@@ -97,6 +98,7 @@ const calculateScore = (timeInSeconds: number) => {
 };
 
 const Index = () => {
+  const navigate = useNavigate();
   const [grid, setGrid] = useState<string[][]>(() => generateRandomGrid());
   const [activeLetters, setActiveLetters] = useState<{ row: number; col: number }[]>([]);
   const [completedWords, setCompletedWords] = useState<string[]>([]);
@@ -112,17 +114,16 @@ const Index = () => {
       const score = calculateScore(finalTime);
       setFinalScore(score);
       playVictorySound();
+      
+      // Add a delay before navigating back to the puzzle selection
       const timer = setTimeout(() => {
-        setGrid(generateRandomGrid());
-        setCompletedWords([]);
-        setFoundWordCells([]);
-        setActiveLetters([]);
-        setIsTimerRunning(true);
-        setFinalScore(0);
+        console.log('Navigating back to puzzle selection');
+        navigate('/puzzles');
       }, 3000);
+      
       return () => clearTimeout(timer);
     }
-  }, [completedWords, finalTime]);
+  }, [completedWords, finalTime, navigate]);
 
   const handleTimeUpdate = (time: number) => {
     setFinalTime(time);
