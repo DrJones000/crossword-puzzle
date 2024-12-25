@@ -182,7 +182,7 @@ const Index = () => {
       <div className="max-w-4xl mx-auto space-y-12 flex flex-col items-center">
         <div className="text-center space-y-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary tracking-tight">
-            THE BUMUH FAMILY
+            BUMUH CROSSWORD PUZZLE
           </h1>
           <div className="inline-block">
             <Timer isRunning={isTimerRunning} onTimeUpdate={handleTimeUpdate} />
