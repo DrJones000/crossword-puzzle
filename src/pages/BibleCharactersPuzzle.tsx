@@ -184,6 +184,11 @@ const BibleCharactersPuzzle = () => {
         </div>
 
         <div className="space-y-8">
+          <WordList 
+            words={WORDS} 
+            completedWords={foundWords}
+          />
+
           <CrosswordGrid
             grid={grid}
             activeLetters={activeLetters}
@@ -191,11 +196,6 @@ const BibleCharactersPuzzle = () => {
             onLetterClick={handleLetterClick}
             gameCompleted={gameCompleted}
             isHidden={!isGameStarted}
-          />
-
-          <WordList 
-            words={WORDS} 
-            completedWords={foundWords}
           />
         </div>
       </div>
