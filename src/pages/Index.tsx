@@ -5,18 +5,17 @@ import CrosswordGrid from '../components/CrosswordGrid';
 
 const WORDS = ['ALFRED', 'MARY', 'NANCY', 'WILSON', 'ELEANOR', 'WILLIAM', 'NOVELA'];
 
-// Predefined grid with words and filled spaces
+// Updated grid with all words properly placed
 const INITIAL_GRID = [
-  ['A', 'L', 'F', 'R', 'E', 'D', 'P', 'Q', 'S'],
-  ['B', 'C', 'D', 'E', 'L', 'F', 'G', 'H', 'I'],
-  ['J', 'M', 'A', 'R', 'Y', 'K', 'L', 'M', 'N'],
-  ['O', 'P', 'Q', 'R', 'A', 'S', 'T', 'U', 'W'],
-  ['N', 'A', 'N', 'C', 'Y', 'V', 'W', 'X', 'I'],
-  ['O', 'B', 'C', 'D', 'O', 'E', 'F', 'G', 'L'],
-  ['V', 'H', 'I', 'J', 'R', 'K', 'L', 'M', 'L'],
-  ['E', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'I'],
-  ['L', 'U', 'V', 'W', 'I', 'L', 'S', 'O', 'N'],
-  ['A', 'X', 'Y', 'Z', 'B', 'C', 'D', 'E', 'M'],
+  ['A', 'L', 'F', 'R', 'E', 'D', 'W', 'Q', 'S'],
+  ['B', 'C', 'D', 'E', 'L', 'I', 'G', 'H', 'I'],
+  ['N', 'M', 'A', 'R', 'Y', 'L', 'L', 'M', 'N'],
+  ['O', 'P', 'Q', 'R', 'A', 'L', 'I', 'U', 'W'],
+  ['V', 'N', 'A', 'N', 'C', 'Y', 'A', 'X', 'I'],
+  ['E', 'B', 'C', 'D', 'N', 'E', 'M', 'G', 'L'],
+  ['L', 'H', 'I', 'J', 'O', 'K', 'L', 'M', 'S'],
+  ['A', 'E', 'L', 'E', 'A', 'N', 'O', 'R', 'O'],
+  ['W', 'I', 'L', 'S', 'O', 'N', 'S', 'T', 'N'],
 ];
 
 const Index = () => {
