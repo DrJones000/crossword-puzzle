@@ -5,7 +5,6 @@ import CrosswordGrid from '../components/CrosswordGrid';
 
 const WORDS = ['ALFRED', 'MARY', 'NANCY', 'WILSON', 'ELEANOR', 'WILLIAM', 'NOVELA'];
 
-// Updated grid with all words properly placed
 const INITIAL_GRID = [
   ['A', 'L', 'F', 'R', 'E', 'D', 'W', 'Q', 'S'],
   ['B', 'C', 'D', 'E', 'L', 'I', 'G', 'H', 'I'],
@@ -40,7 +39,24 @@ const Index = () => {
   const handleLetterClick = (row: number, col: number) => {
     const letterPos = { row, col };
     
+    // Check if the letter is already selected
+    const letterIndex = activeLetters.findIndex(
+      pos => pos.row === row && pos.col === col
+    );
+
     setActiveLetters(prev => {
+      if (letterIndex !== -1) {
+        // If the letter is the last one selected, remove it
+        if (letterIndex === prev.length - 1) {
+          const newActive = prev.slice(0, -1);
+          console.log('Letter deselected');
+          return newActive;
+        }
+        // If it's not the last letter, don't allow deselection
+        return prev;
+      }
+      
+      // Add new letter
       const newActive = [...prev, letterPos];
       // Check if we formed a word
       setTimeout(() => checkWord(newActive), 100);
