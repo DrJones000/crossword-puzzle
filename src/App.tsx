@@ -19,8 +19,8 @@ const App = () => (
           <Route path="/" element={<Welcome />} />
           <Route path="/puzzles" element={<PuzzleSelection />} />
           <Route path="/puzzle/bumuh-family" element={<BumuhPuzzle />} />
-          {/* Other puzzle routes will be implemented later */}
-          <Route path="/puzzle/bible-books" element={<Navigate to="/puzzles" replace />} />
+          <Route path="/puzzle/bible-books/old-testament" element={<Navigate to="/puzzles" replace />} />
+          <Route path="/puzzle/bible-books/new-testament" element={<Navigate to="/puzzles" replace />} />
           <Route path="/puzzle/bible-characters" element={<Navigate to="/puzzles" replace />} />
         </Routes>
       </BrowserRouter>
