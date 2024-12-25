@@ -24,7 +24,9 @@ const playTone = (frequency: number, duration: number, startTime: number = 0, vo
   oscillator.stop(context.currentTime + startTime + duration);
 };
 
-export const playSound = (type: "click" | "complete" | "victory") => {
+export type SoundType = "click" | "complete" | "victory";
+
+export const playSound = (type: SoundType) => {
   switch (type) {
     case "click":
       playTone(800, 0.1);
@@ -59,3 +61,8 @@ export const playSound = (type: "click" | "complete" | "victory") => {
       break;
   }
 };
+
+// Alias functions for backward compatibility
+export const playClickSound = () => playSound("click");
+export const playCompleteSound = () => playSound("complete");
+export const playVictorySound = () => playSound("victory");

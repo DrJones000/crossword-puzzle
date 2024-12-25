@@ -15,12 +15,10 @@ const WORDS = [
 ];
 
 const generateGrid = () => {
-  // Initialize grid with empty spaces
   const grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(''));
   const usedCells: { [key: string]: boolean } = {};
   const placedWords: { word: string; cells: { row: number; col: number }[] }[] = [];
 
-  // Helper function to check if a word can be placed at a position
   const canPlaceWord = (
     word: string,
     startRow: number,
@@ -42,7 +40,6 @@ const generateGrid = () => {
     return true;
   };
 
-  // Place words on the grid
   for (const word of WORDS) {
     let placed = false;
     let attempts = 0;
@@ -69,7 +66,6 @@ const generateGrid = () => {
     }
   }
 
-  // Fill remaining cells with random letters
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   for (let i = 0; i < GRID_SIZE; i++) {
     for (let j = 0; j < GRID_SIZE; j++) {
@@ -122,7 +118,7 @@ const BibleCharactersPuzzle = () => {
 
     if (foundWord && !foundWords.includes(foundWord.word)) {
       console.log("Found word:", foundWord.word);
-      playSound("correct");
+      playSound("complete");
       setFoundWords(prev => [...prev, foundWord.word]);
       setFoundWordCells(prev => [...prev, ...foundWord.cells]);
       
