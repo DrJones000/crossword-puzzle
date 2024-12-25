@@ -27,7 +27,7 @@ const PuzzleHeader = ({
           onClick={onBackToMenu}
           className="text-primary hover:text-primary/80"
         >
-          ← Back to Menu
+          Reset Game
         </Button>
       </div>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary tracking-tight">

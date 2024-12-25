@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import PuzzleHeader from '../components/puzzle/PuzzleHeader';
 import PuzzleGrid from '../components/puzzle/PuzzleGrid';
 import PuzzleWords from '../components/puzzle/PuzzleWords';
@@ -11,7 +10,6 @@ const GRID_SIZE = 15;
 
 const BumuhPuzzle = () => {
   console.log('Rendering BumuhPuzzle component');
-  const navigate = useNavigate();
   const [grid, setGrid] = useState<string[][]>(() => generateRandomGrid(WORDS, GRID_SIZE));
   const [activeLetters, setActiveLetters] = useState<{ row: number; col: number }[]>([]);
   const [completedWords, setCompletedWords] = useState<string[]>([]);
@@ -28,15 +26,8 @@ const BumuhPuzzle = () => {
       const score = calculateScore(finalTime);
       setFinalScore(score);
       playVictorySound();
-      
-      const timer = setTimeout(() => {
-        console.log('Navigating back to puzzle selection');
-        navigate('/puzzles');
-      }, 3000);
-      
-      return () => clearTimeout(timer);
     }
-  }, [completedWords, finalTime, navigate]);
+  }, [completedWords, finalTime]);
 
   const handleTimeUpdate = (time: number) => {
     setFinalTime(time);
@@ -95,6 +86,17 @@ const BumuhPuzzle = () => {
     setIsGridHidden(false);
   };
 
+  const resetGame = () => {
+    setGrid(generateRandomGrid(WORDS, GRID_SIZE));
+    setActiveLetters([]);
+    setCompletedWords([]);
+    setFoundWordCells([]);
+    setIsTimerRunning(true);
+    setFinalTime(0);
+    setFinalScore(0);
+    setIsGridHidden(true);
+  };
+
   return (
     <div className="min-h-screen p-4 animate-fadeIn">
       <div className="max-w-4xl mx-auto space-y-12 flex flex-col items-center">
@@ -102,7 +104,7 @@ const BumuhPuzzle = () => {
           title="BUMUH CROSSWORD PUZZLE"
           isTimerRunning={isTimerRunning}
           onTimeUpdate={handleTimeUpdate}
-          onBackToMenu={() => navigate('/puzzles')}
+          onBackToMenu={resetGame}
           finalScore={finalScore}
           onCountdownComplete={handleCountdownComplete}
         />
