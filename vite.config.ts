@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/crossword-puzzle/',  // Add this line for GitHub Pages
+  base: '/',  // Updated to match GitHub Pages URL
   server: {
     host: "::",
     port: 8080,
