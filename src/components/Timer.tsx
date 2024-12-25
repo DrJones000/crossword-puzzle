@@ -7,17 +7,17 @@ interface TimerProps {
 
 const Timer = ({ isRunning, onTimeUpdate }: TimerProps) => {
   const [time, setTime] = useState(0);
-  const [countdown, setCountdown] = useState<string | null>("3");
+  const [countdown, setCountdown] = useState<string | null>("5");
 
   useEffect(() => {
     if (isRunning && countdown !== null) {
-      const countdownSequence = ["3", "2", "1", "GO!", null];
+      const countdownSequence = ["5", "4", "3", "2", "1", "GO!", null];
       let currentIndex = countdownSequence.indexOf(countdown);
       
       const timer = setTimeout(() => {
         console.log('Countdown:', countdownSequence[currentIndex + 1]);
         setCountdown(countdownSequence[currentIndex + 1]);
-      }, 1000);
+      }, 1500); // Increased from 1000ms to 1500ms for slower countdown
       
       return () => clearTimeout(timer);
     }
