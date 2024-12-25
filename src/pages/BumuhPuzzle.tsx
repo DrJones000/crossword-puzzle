@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Timer from '../components/Timer';
 import WordList from '../components/WordList';
 import CrosswordGrid from '../components/CrosswordGrid';
+import { Button } from '../components/ui/button';
 import { playClickSound, playCompleteSound, playVictorySound } from '../utils/sounds';
 
 const WORDS = ['ALFRED', 'MARY', 'NANCY', 'WILSON', 'ELEANOR', 'WILLIAM', 'NOVELA'];
@@ -107,6 +108,11 @@ const Index = () => {
   const [finalTime, setFinalTime] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
 
+  const handleBackToMenu = () => {
+    console.log('Navigating back to puzzle selection');
+    navigate('/puzzles');
+  };
+
   useEffect(() => {
     if (completedWords.length === WORDS.length) {
       console.log('All words found! Playing victory sound...');
@@ -181,6 +187,15 @@ const Index = () => {
     <div className="min-h-screen p-4 animate-fadeIn">
       <div className="max-w-4xl mx-auto space-y-12 flex flex-col items-center">
         <div className="text-center space-y-6">
+          <div className="flex items-center justify-between w-full">
+            <Button 
+              variant="ghost" 
+              onClick={handleBackToMenu}
+              className="text-primary hover:text-primary/80"
+            >
+              ← Back to Menu
+            </Button>
+          </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary tracking-tight">
             BUMUH CROSSWORD PUZZLE
           </h1>
