@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Timer from '../components/Timer';
 import WordList from '../components/WordList';
 import CrosswordGrid from '../components/CrosswordGrid';
+import { playClickSound, playCompleteSound } from '../utils/sounds';
 
 const WORDS = ['ALFRED', 'MARY', 'NANCY', 'WILSON', 'ELEANOR', 'WILLIAM', 'NOVELA'];
 const GRID_SIZE = 9;
@@ -103,7 +104,7 @@ const Index = () => {
         setCompletedWords([]);
         setFoundWordCells([]);
         setActiveLetters([]);
-      }, 3000); // Wait for fall animation to complete
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [completedWords]);
@@ -113,17 +114,18 @@ const Index = () => {
       .map(({ row, col }) => grid[row][col])
       .join('');
     
-    // Also check the reverse of the word
     const reversedWord = word.split('').reverse().join('');
     
     console.log(`Checking word: ${word} and reversed: ${reversedWord}`);
     
     if (WORDS.includes(word) && !completedWords.includes(word)) {
+      playCompleteSound();
       setCompletedWords(prev => [...prev, word]);
       setFoundWordCells(prev => [...prev, ...letters]);
       setActiveLetters([]);
       console.log(`Completed word: ${word}`);
     } else if (WORDS.includes(reversedWord) && !completedWords.includes(reversedWord)) {
+      playCompleteSound();
       setCompletedWords(prev => [...prev, reversedWord]);
       setFoundWordCells(prev => [...prev, ...letters]);
       setActiveLetters([]);
@@ -132,6 +134,7 @@ const Index = () => {
   };
 
   const handleLetterClick = (row: number, col: number) => {
+    playClickSound();
     const letterPos = { row, col };
     
     const letterIndex = activeLetters.findIndex(
