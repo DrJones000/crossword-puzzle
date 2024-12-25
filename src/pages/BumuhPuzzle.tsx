@@ -7,7 +7,7 @@ import { Button } from '../components/ui/button';
 import { playClickSound, playCompleteSound, playVictorySound } from '../utils/sounds';
 
 const WORDS = ['ALFRED', 'MARY', 'NANCY', 'WILSON', 'ELEANOR', 'WILLIAM', 'NOVELA'];
-const GRID_SIZE = 9;
+const GRID_SIZE = 15; // Updated from 9 to 15
 
 const generateEmptyGrid = () => {
   return Array(GRID_SIZE).fill(null).map(() => 
