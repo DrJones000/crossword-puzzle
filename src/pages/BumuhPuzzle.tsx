@@ -142,20 +142,22 @@ const Index = () => {
     
     const reversedWord = word.split('').reverse().join('');
     
-    console.log(`Checking word: ${word} and reversed: ${reversedWord}`);
+    console.log(`Checking word: ${word}`);
     
-    if (WORDS.includes(word) && !completedWords.includes(word)) {
+    // Convert both the found word and target words to uppercase for comparison
+    const upperWord = word.toUpperCase();
+    const upperReversedWord = reversedWord.toUpperCase();
+    
+    const foundWord = WORDS.find(w => w === upperWord || w === upperReversedWord);
+    
+    if (foundWord && !completedWords.includes(foundWord)) {
+      console.log(`Found word: ${foundWord}`);
       playCompleteSound();
-      setCompletedWords(prev => [...prev, word]);
+      setCompletedWords(prev => [...prev, foundWord]);
       setFoundWordCells(prev => [...prev, ...letters]);
       setActiveLetters([]);
-      console.log(`Completed word: ${word}`);
-    } else if (WORDS.includes(reversedWord) && !completedWords.includes(reversedWord)) {
-      playCompleteSound();
-      setCompletedWords(prev => [...prev, reversedWord]);
-      setFoundWordCells(prev => [...prev, ...letters]);
-      setActiveLetters([]);
-      console.log(`Completed word (reversed): ${reversedWord}`);
+    } else {
+      console.log('Word not found in list');
     }
   };
 
