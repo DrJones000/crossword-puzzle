@@ -37,8 +37,8 @@ const CrosswordGrid = ({
               <div
                 key={`${rowIndex}-${colIndex}`}
                 className={`
-                  w-6 h-6 md:w-12 md:h-12 
-                  text-sm md:text-xl
+                  w-8 h-8 md:w-14 md:h-14 
+                  text-base md:text-2xl
                   letter-cell 
                   ${isActive(rowIndex, colIndex) ? 'active' : ''} 
                   ${isFoundWord(rowIndex, colIndex) ? 'found-word' : ''}

@@ -6,7 +6,7 @@ import { generateRandomGrid, calculateScore } from '../utils/gridUtils';
 import { playClickSound, playCompleteSound, playVictorySound } from '../utils/sounds';
 
 const WORDS = ['ALFRED', 'MARY', 'NANCY', 'WILSON', 'ELEANOR', 'WILLIAM', 'NOVELA'];
-const GRID_SIZE = 15;
+const GRID_SIZE = 12;
 
 const BumuhPuzzle = () => {
   console.log('Rendering BumuhPuzzle component');
