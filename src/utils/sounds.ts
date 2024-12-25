@@ -24,12 +24,12 @@ const playTone = (frequency: number, duration: number, startTime: number = 0, vo
   oscillator.stop(context.currentTime + startTime + duration);
 };
 
-export const playSound = (type: "click" | "correct" | "victory") => {
+export const playSound = (type: "click" | "complete" | "victory") => {
   switch (type) {
     case "click":
       playTone(800, 0.1);
       break;
-    case "correct":
+    case "complete":
       // Play a short ascending arpeggio
       setTimeout(() => playTone(400, 0.15), 0);
       setTimeout(() => playTone(500, 0.15), 100);
